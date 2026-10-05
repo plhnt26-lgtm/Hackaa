@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ការទស្សន៍ទាយ AI</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <style>
+    .console-box {
+      font-family: monospace;
+      background-color: #1a1a1a;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 0 20px #00ff88;
+      color: #00ff88;
+      height: 250px;
+      overflow-y: auto;
+    }
+
+    .loading-screen {
+      font-family: monospace;
+      background: #000;
+      color: #00ff88;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      flex-direction: column;
+      z-index: 50;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    .hidden-screen {
+      display: none;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-900 text-white font-sans">
+
+  <!-- Loading -->
+  <div id="loading" class="loading-screen">
+    <p>កំពុងផ្ទុក... សូមរង់ចាំខណៈពេលដែលយើងរៀបចំបទពិសោធន៍របស់អ្នក។</p>
+  </div>
+
+  <div id="mainContent" class="hidden-screen">
+
+    <!-- Header -->
+    <header class="w-full bg-gray-800 p-4 flex justify-between items-center">
+      <h1 class="text-xl font-bold text-green-400">
+        ការទស្សន៍ទាយ AI
+      </h1>
+
+      <nav class="space-x-4">
+        <a href="#how" class="hover:text-green-400">របៀបដែលវាដំណើរការ</a>
+        <a href="#games" class="hover:text-green-400">ហ្គេម</a>
+        <a href="#start" class="hover:text-green-400">ចាប់ផ្តើម</a>
+      </nav>
+    </header>
+
+    <!-- Hero -->
+    <section
+      id="start"
+      class="min-h-screen flex flex-col items-center justify-center px-4 text-center"
+    >
+
+      <h2 class="text-3xl md:text-5xl font-bold mb-6">
+        ការទស្សន៍ទាយហ្គេម AI
+      </h2>
+
+      <div class="mb-4 text-lg font-semibold text-yellow-300">
+        👋 សូមស្វាគមន៍មកកាន់សេវាកម្មរបស់
+        <span class="text-green-400">Vireak Mony</span>!
+      </div>
+
+      <p class="max-w-xl mb-8 text-gray-300">
+        ប្រព័ន្ធ AI សម្រាប់វិភាគទិន្នន័យហ្គេម
+        និងបង្ហាញលទ្ធផលវិភាគសម្រាប់អ្នកប្រើប្រាស់។
+      </p>
+
+      <!-- ID Input -->
+      <input
+        id="userId"
+        type="text"
+        placeholder="បញ្ចូលលេខសម្គាល់ (ID)"
+        class="bg-gray-700 text-white p-3 rounded-md mb-4"
+      />
+
+      <button
+        id="connectButton"
+        class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-xl text-lg transition"
+      >
+        ភ្ជាប់គណនី
+      </button>
+
+      <!-- Connection Success -->
+      <div
+        id="connectionSuccess"
+        class="hidden text-green-400 font-bold mt-6"
+      >
+        <p>
+          លេខសម្គាល់គណនី៖
+          <span id="accountIdDisplay"></span>
+          បានភ្ជាប់ដោយជោគជ័យ!
+        </p>
+
+        <p class="mt-2">
+          ស្ថានភាព៖ សកម្ម
+        </p>
+
+        <button
+          id="getSignalButton"
+          class="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-xl text-lg transition mt-4"
+        >
+          ទទួលសញ្ញា
+        </button>
+      </div>
+
+      <!-- Signal Result -->
+      <div
+        id="signalBox"
+        class="hidden bg-gray-800 border border-green-400 p-6 rounded-xl max-w-md mx-auto mt-6"
+      >
+        <h2 class="text-xl font-bold text-green-400 mb-3">
+          លទ្ធផលវិភាគ
+        </h2>
+
+        <p class="text-gray-300">
+          ប្រព័ន្ធកំពុងវិភាគទិន្នន័យ...
+        </p>
+
+        <p
+          id="signalStatus"
+          class="text-green-400 font-semibold mt-3"
+        ></p>
+      </div>
+
+    </section>
+
+    <!-- Supported Games -->
+    <section
+      id="games"
+      class="bg-gray-800 py-12 px-6 text-center"
+    >
+      <h3 class="text-2xl font-bold text-green-400 mb-6">
+        ហ្គេមដែលគាំទ្រ
+      </h3>
+
+      <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+
+        <div class="bg-gray-700 p-6 rounded-xl shadow-lg">
+          <h4 class="text-xl font-bold mb-2">🎮 Aviator</h4>
+          <p class="text-gray-300">
+            ប្រព័ន្ធវិភាគទិន្នន័យ និងបង្ហាញស្ថានភាពហ្គេម។
+          </p>
+        </div>
+
+        <div class="bg-gray-700 p-6 rounded-xl shadow-lg">
+          <h4 class="text-xl font-bold mb-2">💣 Mines</h4>
+          <p class="text-gray-300">
+            ប្រព័ន្ធវិភាគលទ្ធផល និងទិន្នន័យហ្គេម។
+          </p>
+        </div>
+
+        <div class="bg-gray-700 p-6 rounded-xl shadow-lg">
+          <h4 class="text-xl font-bold mb-2">🥅 Penalty</h4>
+          <p class="text-gray-300">
+            ប្រព័ន្ធវិភាគទិន្នន័យសម្រាប់ហ្គេម។
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section
+      id="how"
+      class="bg-gray-900 py-12 px-6 text-center"
+    >
+      <h3 class="text-2xl font-bold text-green-400 mb-6">
+        របៀបដែលវាដំណើរការ
+      </h3>
+
+      <div class="max-w-3xl mx-auto space-y-4 text-gray-300">
+        <p>📡 ប្រព័ន្ធវិភាគទិន្នន័យហ្គេម។</p>
+        <p>💡 បង្ហាញលទ្ធផលវិភាគនៅលើអេក្រង់។</p>
+        <p>📲 អ្នកប្រើប្រាស់អាចមើលលទ្ធផលបានភ្លាមៗ។</p>
+      </div>
+    </section>
+
+    <!-- Console -->
+    <section class="bg-black py-12 px-6 text-center">
+      <h3 class="text-xl font-bold text-green-400 mb-4">
+        [ កុងសូល - កំណត់ហេតុត្រួតពិនិត្យ ]
+      </h3>
+
+      <div
+        class="console-box max-w-3xl mx-auto text-left"
+        id="console"
+      >
+        <p>[INFO] សេវាកម្មទស្សន៍ទាយកំពុងសកម្ម ✅</p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center text-gray-500 text-sm py-6">
+      © 2026 ការទស្សន៍ទាយ AI
+    </footer>
+
+  </div>
+
+  <script>
+    // Loading screen
+    setTimeout(() => {
+      document
+        .getElementById("loading")
+        .classList.add("hidden-screen");
+
+      document
+        .getElementById("mainContent")
+        .classList.remove("hidden-screen");
+    }, 3000);
+
+
+    // Connect account
+    document
+      .getElementById("connectButton")
+      .addEventListener("click", () => {
+
+        const userId =
+          document.getElementById("userId").value.trim();
+
+        if (!userId) {
+          return;
+        }
+
+        document.getElementById("accountIdDisplay").innerText =
+          userId;
+
+        document
+          .getElementById("connectionSuccess")
+          .classList.remove("hidden");
+
+        document
+          .getElementById("signalBox")
+          .classList.add("hidden");
+      });
+
+
+    // Get signal
+    document
+      .getElementById("getSignalButton")
+      .addEventListener("click", () => {
+
+        const signalBox =
+          document.getElementById("signalBox");
+
+        const signalStatus =
+          document.getElementById("signalStatus");
+
+        signalBox.classList.remove("hidden");
+
+        signalStatus.innerText =
+          "ការវិភាគត្រូវបានបញ្ចប់។";
+      });
+  </script>
+
+</body>
+          </html>
